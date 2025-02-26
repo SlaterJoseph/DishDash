@@ -1,4 +1,4 @@
-package com.dishdash.user;
+package com.dishdash.services;
 
 public interface UserService {
 }

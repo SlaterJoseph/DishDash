@@ -1,4 +1,4 @@
-package com.dishdash.meal;
+package com.dishdash.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class MealDBClient {
+public class MealDBClientImpl implements MealDBClient {
     private final RestTemplate restTemplate;
     private final String baseUrl;
-    private static final Logger logger = LoggerFactory.getLogger(MealDBClient.class.getSimpleName());
+    private static final Logger logger = LoggerFactory.getLogger(MealDBClientImpl.class.getSimpleName());
 
-    public MealDBClient(RestTemplate restTemplate, @Value("${meal.url}") String baseUrl) {
+    public MealDBClientImpl(RestTemplate restTemplate, @Value("${meal.url}") String baseUrl) {
         this.restTemplate = restTemplate;
         this.baseUrl = baseUrl;
     }
@@ -22,6 +22,7 @@ public class MealDBClient {
      * @param mealId: The ID of the given meal
      * @return The JSON data of the meal from MealDB
      */
+    @Override
     public String MealById(String mealId) {
         String url = baseUrl + "search.php?i=" + mealId;
         logger.info("Getting Meal by Id from {}", url);
@@ -34,6 +35,7 @@ public class MealDBClient {
      * A Method which lists all meal categories
      * @return A list of all categories
      */
+    @Override
     public String ListMealCategories() {
         logger.info("Getting List of Meal Categories");
         String response = restTemplate.getForObject(baseUrl + "list.php?c=list", String.class);
@@ -45,6 +47,7 @@ public class MealDBClient {
      * A Method which lists all meal area origins
      * @return A list of all areas
      */
+    @Override
     public String ListMealAreas() {
         logger.info("Getting List of Meal Areas");
         String response =  restTemplate.getForObject(baseUrl + "list.php?a=list", String.class);
@@ -56,6 +59,7 @@ public class MealDBClient {
      * A Method which lists all meal ingredients
      * @return A list of all ingredients
      */
+    @Override
     public String ListMealIngredients() {
         logger.info("Getting List of Meal Ingredients");
         String response = restTemplate.getForObject(baseUrl + "list.php?i=list", String.class);
@@ -68,6 +72,7 @@ public class MealDBClient {
      * @param category: The category to filter by
      * @return The meals which fit into this category
      */
+    @Override
     public String FilterByCategory(String category) {
         String url = baseUrl + "search.php?c=" + category;
         logger.info("Getting Meal By Category with filter from {}", url);
@@ -81,6 +86,7 @@ public class MealDBClient {
      * @param area: The chosen area of origin
      * @return The meals which originate from this area
      */
+    @Override
     public String FilterByArea(String area) {
         String url = baseUrl + "search.php?a=" + area;
         logger.info("Getting Meal By Area with filter from {}", url);
@@ -94,6 +100,7 @@ public class MealDBClient {
      * @param ingredient: The chosen ingredient
      * @return The meals which include this ingredient
      */
+    @Override
     public String FilterByIngredient(String ingredient) {
         String url = baseUrl + "search.php?i=" + ingredient;
         logger.info("Getting Meal By Ingredient with filter from {}", url);

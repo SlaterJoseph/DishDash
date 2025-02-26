@@ -1,4 +1,4 @@
-package com.dishdash.user;
+package com.dishdash.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserModel {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +23,7 @@ public class UserModel {
     private String lastName;
     private String email;
 
-    public UserModel(String username, String password, String email){
+    public User(String username, String password, String email){
         this.username = username;
         this.password = password;
         this.email = email;

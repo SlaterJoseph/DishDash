@@ -1,4 +1,4 @@
-package com.dishdash.meal;
+package com.dishdash.controllers;
 
 import org.springframework.stereotype.Controller;
 

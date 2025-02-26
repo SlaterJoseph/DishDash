@@ -1,4 +1,4 @@
-package com.dishdash.user;
+package com.dishdash.repository;
 
 import org.springframework.stereotype.Repository;
 
