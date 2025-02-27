@@ -1,5 +1,6 @@
-package com.dishdash.services;
+package com.dishdash.services.impl;
 
+import com.dishdash.services.MealDBClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

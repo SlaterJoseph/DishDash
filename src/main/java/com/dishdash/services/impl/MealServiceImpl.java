@@ -1,5 +1,6 @@
-package com.dishdash.services;
+package com.dishdash.services.impl;
 
+import com.dishdash.services.MealService;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
