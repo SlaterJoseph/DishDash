@@ -3,14 +3,24 @@ package com.dishdash.services.impl;
 import com.dishdash.models.User;
 import com.dishdash.repository.UserRepository;
 import com.dishdash.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
+@Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
-    public UserServiceImpl(UserRepository userRepository) {
+
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -20,6 +30,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User saveUser(User user) {
+        logger.info("Saving user: " + user.toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -31,7 +43,9 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Optional<User> loginByUsername(String username, String password) {
-        return Optional.empty();
+        logger.info("Login by username: " + username);
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        return userOpt.filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 
     /**
@@ -42,6 +56,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Optional<User> loginByEmail(String email, String password) {
-        return Optional.empty();
+        logger.info("Login by email: " + email);
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        return userOpt.filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 }
